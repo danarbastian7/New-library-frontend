@@ -1,0 +1,163 @@
+import React from "react"
+import { Button, Container, Col, Row, Table } from "react-bootstrap"
+import { useCart } from "react-use-cart"
+import { useThemeHook } from "../GlobalComponents/ThemeProvider"
+import { BsCartCheck, BsCartX } from "react-icons/bs"
+import { useState } from "react"
+import { axiosInstance } from "../api"
+import Books from "../components/books"
+
+const Cart = () => {
+  const [theme] = useThemeHook()
+  const {
+    isEmpty,
+    items,
+    cartTotal,
+    updateItemQuantity,
+    removeItem,
+    emptyCart,
+  } = useCart()
+  const [books, setBooks] = useState([])
+  const fetchBooks = async () => {
+    try {
+      const response = await axiosInstance.get("/books")
+      setBooks(response.data.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const renderBooks = () => {
+    return books.map((val) => {
+      return (
+        <Books
+          id={val.id}
+          title={val.title}
+          author={val.author}
+          price={val.price}
+          image_url={val.image_url}
+          genre={val.genre}
+          publish_year={val.publish_year}
+          key={val.id.toString()}
+        />
+      )
+    })
+  }
+  return (
+    <Container className="py-4 mt-5">
+      <h1
+        className={`${
+          theme ? "text-light" : "text-light-primary"
+        } my-5 text-center`}
+      >
+        {isEmpty ? "Your Cart is Empty" : "The Cart"}
+      </h1>
+      <Row className="justify-content-center">
+        <Table
+          responsive="sm"
+          striped
+          bordered
+          hover
+          variant={theme ? "dark" : "light"}
+          className="mb-5"
+        >
+          <tbody>
+            {books.map((val) => {
+              return (
+                <tr key={val.id.toString()}>
+                  <td>
+                    <div
+                      style={{
+                        background: "white",
+                        height: "8rem",
+                        overflow: "hidden",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div style={{ padding: ".5rem" }}>
+                        <img
+                          src={val.image_url}
+                          style={{ width: "4rem" }}
+                          alt={val.title}
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h6
+                      style={{
+                        whiteSpace: "nowrap",
+                        width: "14rem",
+                        overflow: "hidden",
+                        textOverFlow: "ellipsis",
+                      }}
+                    >
+                      {val.title}
+                    </h6>
+                  </td>
+                  <td>Rp. {val.price}</td>
+                  <td>Quantity ({val.quantity})</td>
+                  <td>
+                    <Button
+                      onClick={() =>
+                        updateItemQuantity(val.id, val.quantity - 1)
+                      }
+                      className="ms-2"
+                    >
+                      -
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        updateItemQuantity(val.id, val.quantity + 1)
+                      }
+                      className="ms-2"
+                    >
+                      +
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => removeItem(val.id)}
+                      className="ms-2"
+                    >
+                      Remove Item
+                    </Button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </Table>
+        {!isEmpty && (
+          <Row
+            style={{ position: "fixed", bottom: 0 }}
+            className={`${
+              theme ? "bg-light-black text-light" : "bg-light text-balck"
+            } justify-content-center w-100`}
+          >
+            <Col className="py-2">
+              <h4>Total Price: Rp. {cartTotal}</h4>
+            </Col>
+            <Col className="p-0" md={4}>
+              <Button
+                variant="danger"
+                className="m-2"
+                onClick={() => emptyCart()}
+              >
+                <BsCartX size="1.7rem" />
+                Clear Cart
+              </Button>
+              {/* <Button variant="success" className="m-2">
+                <BsCartCheck size="1.7rem" onClick={() => emptyCart()} />
+                Clear Cart
+              </Button> */}
+            </Col>
+          </Row>
+        )}
+      </Row>
+    </Container>
+  )
+}
+
+export default Cart
