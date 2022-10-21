@@ -22,6 +22,7 @@ const Books = ({
   image_url,
   genre,
   price,
+  category,
 }) => {
   return (
     <Box>
@@ -39,6 +40,7 @@ const Books = ({
           <Text fontFamily={"sans-serif"}>{publish_year}</Text>
           <Text fontFamily={"sans-serif"}>{genre}</Text>
           <Text fontFamily={"sans-serif"}>Rp. {price}</Text>
+          <Text fontFamily={"sans-serif"}>{category}</Text>
           <Text fontFamily={"sans-serif"}>{summary}</Text>
         </UnorderedList>
       </Stack>

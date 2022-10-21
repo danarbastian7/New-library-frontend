@@ -1,33 +1,33 @@
 /* theme dark */
-.bg-black{
-  background-color: black;
+.bg-black {
+  background-color: rgb(65, 62, 62);
 }
-.bg-light-black{
-  background-color: #262626 !important;
+.bg-light-black {
+  background-color: rgb(65, 62, 62) !important;
 }
-.text-black{
-  color: black;
+.text-black {
+  color: rgb(65, 62, 62);
 }
-.text-light-black{
-  color: #262626;
+.text-light-black {
+  color: rgb(65, 62, 62);
 }
-.bg-dark-primary{
-  background-color: #fcbc73 !important;
+.bg-dark-primary {
+  background-color: #75fc73 !important;
 }
-.text-dark-primary{
-  color: #fcbc73 !important;
+.text-dark-primary {
+  color: #75fc73 !important;
 }
 
 /* theme light */
-.bg-light{
+.bg-light {
   background-color: white;
 }
-.bg-light-2{
+.bg-light-2 {
   background-color: #dadcde;
 }
-.bg-light-primary{
+.bg-light-primary {
   background-color: #191659 !important;
 }
-.text-light-primary{
+.text-light-primary {
   color: #191659 !important;
 }

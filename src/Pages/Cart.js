@@ -27,22 +27,6 @@ const Cart = () => {
     }
   }
 
-  const renderBooks = () => {
-    return books.map((val) => {
-      return (
-        <Books
-          id={val.id}
-          title={val.title}
-          author={val.author}
-          price={val.price}
-          image_url={val.image_url}
-          genre={val.genre}
-          publish_year={val.publish_year}
-          key={val.id.toString()}
-        />
-      )
-    })
-  }
   return (
     <Container className="py-4 mt-5">
       <h1
